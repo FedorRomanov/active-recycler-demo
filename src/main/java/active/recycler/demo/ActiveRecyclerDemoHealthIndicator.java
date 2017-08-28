@@ -5,6 +5,10 @@ import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
 
+import static active.recycler.demo.HealthState.Healthy;
+import static active.recycler.demo.HealthState.Sick;
+import static active.recycler.demo.HealthState.Unstable;
+
 @Component
 public class ActiveRecyclerDemoHealthIndicator implements HealthIndicator {
 
@@ -17,7 +21,7 @@ public class ActiveRecyclerDemoHealthIndicator implements HealthIndicator {
 
     @Override
     public Health health() {
-        switch (activeRecyclerDemoService.getHealthState()) {
+        switch (activeRecyclerDemoService.healthState()) {
             case Healthy:
             case Unstable:
                 return Health.up().build();

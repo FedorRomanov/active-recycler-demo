@@ -8,16 +8,14 @@ import org.springframework.stereotype.Component;
 public class ActiveRecyclerDemoService {
 
     private final ActiveVMRecycler recycler;
+    private final String instanceId;
 
     private HealthState healthState = HealthState.Healthy;
 
     @Autowired
     public ActiveRecyclerDemoService(ActiveVMRecycler recycler) {
         this.recycler = recycler;
-    }
-
-    public HealthState healthStatus() {
-        return healthState;
+        instanceId = recycler.instanceId();
     }
 
     public String veryImpotantService(boolean makeUnstable){
@@ -25,17 +23,17 @@ public class ActiveRecyclerDemoService {
         if(makeUnstable) {
             healthState = HealthState.Unstable;
             if(recycler.recycleMe("something when wrong.\n")) {
-                return recycler.instanceId() +" becomes unstable. Triggered active recycling.\n";
+                return instanceId +" becomes unstable. Triggered active recycling.\n";
             } else {
-                return recycler.instanceId() +" is already unstable, recycling is in progress.\n";
+                return instanceId +" is already unstable, recycling is in progress.\n";
             }
         } else {
             healthState = HealthState.Healthy;
-            return recycler.instanceId() +" is healthy.\n";
+            return instanceId +" is healthy.\n";
         }
     }
 
-    public HealthState getHealthState() {
+    public HealthState healthState() {
         return healthState;
     }
 }
