@@ -1,5 +1,6 @@
 package active.recycler.demo;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -28,15 +29,12 @@ public class ActiveRecyclerDemoControllerIT {
 
     @Before
     public void setUp() throws Exception {
-        this.base = new URL("http://localhost:" + port + "/may-cause-unrecoverable-error");
+        this.base = new URL("http://localhost:" + port + "/very-important-service");
     }
 
     @Test
-    public void callingUriTwoTimesShouldReturnSickAndHealthy() throws Exception {
+    public void callingUriShouldReturnSick() throws Exception {
         ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
-        assertThat(response.getBody(), equalTo("I am sick"));
-
-        response = template.getForEntity(base.toString(), String.class);
-        assertThat(response.getBody(), equalTo("I am healthy"));
+        assertThat(response.getBody(), containsString("is healthy.\n"));
     }
 }

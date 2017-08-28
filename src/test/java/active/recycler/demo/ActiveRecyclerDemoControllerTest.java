@@ -1,5 +1,6 @@
 package active.recycler.demo;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,9 +25,9 @@ public class ActiveRecyclerDemoControllerTest {
 
     @Test
     public void mayCauseUnrecoverableError() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/may-cause-unrecoverable-error")
+        mvc.perform(MockMvcRequestBuilders.get("/very-important-service")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("I am sick")));
+                .andExpect(content().string(containsString("is healthy.\n")));
     }
 }

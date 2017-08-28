@@ -8,15 +8,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class ActiveRecyclerDemoHealthIndicator implements HealthIndicator {
 
+    private final ActiveRecyclerDemoService activeRecyclerDemoService;
+
     @Autowired
-    ActiveRecyclerDemoService activeRecyclerDemoService;
+    public ActiveRecyclerDemoHealthIndicator(ActiveRecyclerDemoService activeRecyclerDemoService) {
+        this.activeRecyclerDemoService = activeRecyclerDemoService;
+    }
 
     @Override
     public Health health() {
-        if (!activeRecyclerDemoService.isHealthy()) {
-            return Health.down().build();
+        switch (activeRecyclerDemoService.getHealthState()) {
+            case Healthy:
+            case Unstable:
+                return Health.up().build();
+            case Sick:
+                return Health.down().build();
+            default:
+                throw new IllegalStateException("Unknown health state");
         }
-        return Health.up().build();
     }
 
 }

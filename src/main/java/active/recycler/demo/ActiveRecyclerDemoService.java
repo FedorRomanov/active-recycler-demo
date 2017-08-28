@@ -7,21 +7,35 @@ import org.springframework.stereotype.Component;
 @Component
 public class ActiveRecyclerDemoService {
 
+    private final ActiveVMRecycler recycler;
+
+    private HealthState healthState = HealthState.Healthy;
+
     @Autowired
-    ActiveVMRecycler recycler;
-
-    private boolean isHealthy = true;
-
-    public boolean isHealthy() {
-        return isHealthy;
+    public ActiveRecyclerDemoService(ActiveVMRecycler recycler) {
+        this.recycler = recycler;
     }
 
-    public void mayCauseUnrecoverableError(){
-        if (isHealthy) {
-            isHealthy = false;
-            recycler.recycleMe("something bad happened!");
+    public HealthState healthStatus() {
+        return healthState;
+    }
+
+    public String veryImpotantService(boolean makeUnstable){
+        //some actual business logic here
+        if(makeUnstable) {
+            healthState = HealthState.Unstable;
+            if(recycler.recycleMe("something when wrong.\n")) {
+                return recycler.instanceId() +" becomes unstable. Triggered active recycling.\n";
+            } else {
+                return recycler.instanceId() +" is already unstable, recycling is in progress.\n";
+            }
         } else {
-            isHealthy = true;
+            healthState = HealthState.Healthy;
+            return recycler.instanceId() +" is healthy.\n";
         }
+    }
+
+    public HealthState getHealthState() {
+        return healthState;
     }
 }
