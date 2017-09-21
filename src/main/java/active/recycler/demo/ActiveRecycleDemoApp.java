@@ -24,7 +24,7 @@ public class ActiveRecycleDemoApp {
 
     @RequestMapping("/very-important-service")
     public String veryImportantService(@RequestParam(value="makeUnstable", defaultValue="false") boolean makeUnstable) {
-        return activeRecyclerDemoService.veryImpotantService(makeUnstable);
+        return activeRecyclerDemoService.veryImportantService(makeUnstable);
     }
 
 }

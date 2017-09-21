@@ -1,24 +1,19 @@
 package active.recycler.demo;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
-
-import static active.recycler.demo.HealthState.Healthy;
-import static active.recycler.demo.HealthState.Sick;
-import static active.recycler.demo.HealthState.Unstable;
 
 @Component
 public class ActiveRecyclerDemoHealthIndicator implements HealthIndicator {
 
     private final ActiveRecyclerDemoService activeRecyclerDemoService;
 
-    @Autowired
     public ActiveRecyclerDemoHealthIndicator(ActiveRecyclerDemoService activeRecyclerDemoService) {
         this.activeRecyclerDemoService = activeRecyclerDemoService;
     }
 
+    //used by load-balancer to put node out of rotation
     @Override
     public Health health() {
         switch (activeRecyclerDemoService.healthState()) {

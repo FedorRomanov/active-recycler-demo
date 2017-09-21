@@ -10,7 +10,8 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.6.RELEASE</version>
+        <!-- released in Sep 2017 and uses Spring Boot 1.4(no Autowire necessary)-->
+        <version>1.5.7.RELEASE</version>
     </parent>
 
     <description>Spring Boot web app to demo TomTom Active VM Recycler</description>
