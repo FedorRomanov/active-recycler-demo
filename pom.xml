@@ -10,7 +10,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <!-- released in Sep 2017 and uses Spring Boot 1.4(no Autowire necessary)-->
+        <!-- released in Sep 2017(no Autowire necessary)-->
         <version>1.5.7.RELEASE</version>
     </parent>
 
@@ -64,6 +64,10 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
